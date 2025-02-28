@@ -1,3 +1,24 @@
-<h1>Hello World</h1>
-
 <h2><%= @list.name %></h2>
+<%= link_to "Lists", lists_path %>
+<%# <%= link_to "Delete this list", list_path(@list)%>
+<%= link_to "Ajouter un bookmark", new_list_bookmark_path(@list)%>
+
+
+  <div class="cards">
+    <% @list.movies.each do |movie| %>
+          <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+
+        <div class="card-trip">
+          <img src="<%= movie.poster_url %>" />
+          <div class="card-trip-infos">
+            <div>
+              <h2><%= movie.title %></h2>
+              <p><%= movie.overview %></p>
+              <p><%= bookmark.comment %></p>
+              <%= link_to "Delete this bookmark", bookmark_path(@list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+            </div>
+          </div>
+        </div>
+
+    <% end %>
+  </div>
